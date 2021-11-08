@@ -1,5 +1,5 @@
 # tal-bixin-web-utils
-## createInitLogCenter 日志打点
+## createInitLogCenter: 日志埋点
 
 ```
   // 初始化日志
