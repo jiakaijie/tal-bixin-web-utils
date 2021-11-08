@@ -1,6 +1,15 @@
 # tal-bixin-web-utils
 ## 使用 createInitLogCenter: 日志埋点
 
+下载
+```
+npm i tal-bixin-web-utils
+```
+引入
+```
+import { createInitLogCenter } from 'tal-bixin-web-utils'
+```
+使用
 ```
   // 初始化日志
   const { cacheLogData, sendLog } = createInitLogCenter({
