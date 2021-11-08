@@ -1,8 +1,8 @@
 import { createInitLogCenter } from '../src/index.js';
 
 const { cacheLogData, sendLog } = createInitLogCenter({
-  appId: '1004487',
-  appKey: '07b3f1dbe62489ba862f17169c52a09d',
+  appId: 'a',
+  appKey: 'b',
 })
 
 cacheLogData({
