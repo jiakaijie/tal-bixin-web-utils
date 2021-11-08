@@ -1,24 +1,28 @@
-import axios from 'axios'
-import md5 from 'md5';
+// import axios from 'axios'
+// import md5 from 'md5';
 
 import { endTypeConfig, pWlogTypeConfig, pcWebTypeConfig } from './utils/type.js';
 
 const createInitLogCenter = (config) => {
   const appConfig = config;
   const host = endTypeConfig.pcOrWeb;
+
   const { appId = '', appKey = '', logType = '' } = appConfig;
+
   const log = appConfig.logType ? (pcWebTypeConfig[logType] ? pcWebTypeConfig[logType] : pcWebTypeConfig.sys) : pcWebTypeConfig.sys;
 
   let commonData = {};
 
   const cacheLogData = (data) => {
-    commonData = { ...commonData, data }
+    commonData = { ...commonData, ...data }
   }
 
   const sendLog = (nowData) => {
-    const dateNow = Date.now()
+    const dateNow = Date.now();
     const data = { ...commonData, ...nowData };
-    return axios.get(`${host}/${appId}/${log}.gif?content=${JSON.stringify(data)}`, {
+    const href = `${host}/${appId}/${log}.gif?content=${JSON.stringify(data)}`;
+
+    return axios.get(href, {
       headers: {
         'X-Log-Appid': appId,
         'X-Log-TimeStamp': dateNow,
