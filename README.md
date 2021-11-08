@@ -3,7 +3,7 @@
 
 下载
 ```
-npm i tal-bixin-web-utils
+npm i tal-bixin-web-utils -S
 ```
 引入
 ```
