@@ -32,6 +32,16 @@ sendLog({
 
 ## 使用 dataTypeConfig 对象: 去定义字段类型，跟上边mustDataType参数配合使用
 ```
+const mustDataType = {
+  a: {
+    type: dataTypeConfig.string
+  },
+  b: {
+    type: dataTypeConfig.number
+  }
+}
+```
+```
 // 目前支持下边这些数据类型
 const dataTypeConfig = {
   null: '[object Null]',
@@ -41,15 +51,5 @@ const dataTypeConfig = {
   boolean: '[object Boolean]',
   obj: '[object Object]',
   arr: '[object Array]',
-}
-```
-```
-const mustDataType = {
-  a: {
-    type: dataTypeConfig.string
-  },
-  b: {
-    type: dataTypeConfig.number
-  }
 }
 ```
