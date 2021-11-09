@@ -1,19 +1,35 @@
-import { createInitLogCenter } from '../src/index.js';
+import { checkDataType, dataTypeConfig } from '../src/index.js';
+console.error('zhixing')
+const checkConfig = {
+  a: {
+    type: dataTypeConfig.string
+  },
+  b: {
+    type: dataTypeConfig.number
+  }
+}
+const data = {
+  a: '132',
+  b: 123
+}
 
-const { cacheLogData, sendLog } = createInitLogCenter({
-  appId: 'a',
-  appKey: 'b',
-})
+const res = checkDataType(checkConfig, data)
+console.error('res', res)
 
-cacheLogData({
-  a: '1',
-  b: '2'
-})
+// const { cacheLogData, sendLog } = createInitLogCenter({
+//   appId: 'a',
+//   appKey: 'b',
+// })
 
-cacheLogData({
-  c: '3',
-  d: '4'
-})
+// cacheLogData({
+//   a: '1',
+//   b: '2'
+// })
+
+// cacheLogData({
+//   c: '3',
+//   d: '4'
+// })
 
 // sendLog({
 //   dataType: 'test',
