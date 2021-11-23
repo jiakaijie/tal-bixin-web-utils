@@ -6,6 +6,8 @@ import checkDataType, { checkConfig } from './checkData.js';
 import { isNull, isUndefined, isNumber, isString, isBoolean, isObj, isArr, getType, dataTypeConfig } from './utils/dataType.js';
 import { logError } from './utils/log.js';
 
+const logCenterCommonData = 'logCenterCommonData'
+
 const createInitLogCenter = (config) => {
 
   if (!isObj(config)) {
@@ -46,6 +48,9 @@ const createInitLogCenter = (config) => {
   const cacheLogData = (data) => {
     if (isObj(data)) {
       commonData = { ...commonData, ...data };
+      if (window && window.localStorage) {
+        localStorage.setItem(logCenterCommonData, JSON.stringify(commonData));
+      }
     } else {
       logError('入参必须是对象')
     }
@@ -53,7 +58,13 @@ const createInitLogCenter = (config) => {
 
   const sendLog = (nowData) => {
     if (isObj(nowData)) {
-      const data = { ...commonData, ...nowData };
+      let newCommonData;
+      if (window && window.localStorage) {
+        newCommonData = JSON.parse(localStorage.getItem(logCenterCommonData) || '{}') || {};
+      } else {
+        newCommonData = commonData;
+      }
+      const data = { ...newCommonData, ...nowData };
       if (checkDataType(mustDataType, data)) {
         const dateNow = Date.now();
         const href = `${host}/${appId}/${log}.gif?content=${JSON.stringify(data)}`;
