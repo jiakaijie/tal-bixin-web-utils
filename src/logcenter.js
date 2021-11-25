@@ -45,6 +45,10 @@ const createInitLogCenter = (config) => {
 
   let commonData = {};
 
+  if (window && window.localStorage) {
+    commonData = JSON.parse(localStorage.getItem(logCenterCommonData) || '{}') || {};
+  }
+
   const cacheLogData = (data) => {
     if (isObj(data)) {
       commonData = { ...commonData, ...data };
