@@ -13,6 +13,7 @@ import { createInitLogCenter, dataTypeConfig } from 'tal-bixin-web-utils'
 const { cacheLogData, sendLog } = createInitLogCenter({
   appId: 'abc',   // 未来云appId: String
   appKey: 'def',  // 未来云appKey: String
+  isGoManage: 1,  // 是否执行打点请求 Number(1: 打点, 0: 不打点) 默认打点
   logType: 'sys', // 未来云平台配置类型: String('sys': 系统日志, 'interactive': 交互日志, 'pv': 展示日志, 'all': 合并日志) || 不传该字段默认 'sys'
   mustDataType: {}, // 需要校验的必要的参数类型: 不传默认是空对象
 })

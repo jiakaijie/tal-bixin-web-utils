@@ -34,11 +34,13 @@ const createInitLogCenter = (config) => {
   const host = endTypeConfig.pcOrWeb;
   const appConfig = config;
 
-  const { appId, appKey, logType = '', mustDataType = {} } = appConfig;
+  const { appId, appKey, logType = '', mustDataType = {}, isGoManage = 1 } = appConfig;
 
   if (!checkConfig(mustDataType)) {
     return {};
   }
+
+  const isMyGoManage = isNumber(isGoManage) ? isGoManage : 1;
 
   // 默认是打的是系统日志
   const log = logType ? (pcWebTypeConfig[logType] ? pcWebTypeConfig[logType] : pcWebTypeConfig.sys) : pcWebTypeConfig.sys;
@@ -61,6 +63,9 @@ const createInitLogCenter = (config) => {
   }
 
   const sendLog = (nowData) => {
+    if (!isMyGoManage) {
+      return;
+    }
     if (isObj(nowData)) {
       let newCommonData;
       if (window && window.localStorage) {
@@ -71,15 +76,18 @@ const createInitLogCenter = (config) => {
       const data = { ...newCommonData, ...nowData };
       if (checkDataType(mustDataType, data)) {
         const dateNow = Date.now();
-        const href = `${host}/${appId}/${log}.gif?content=${JSON.stringify(data)}`;
+        const href = `${host}/${appId}/${log}.gif`;
 
-        return axios.get(href, {
+        return axios({
+          url: href,
+          method: 'post',
           headers: {
             'X-Log-Appid': appId,
             'X-Log-TimeStamp': dateNow,
             'X-Log-Sign': md5(`${appId}&${dateNow}${appKey}`), // 通过appId + & +当前日期时间戳 + appkey 以md5签名
             'Content-Type': 'text/plain;charset=UTF-8',
-          }
+          },
+          data
         })
 
       }
