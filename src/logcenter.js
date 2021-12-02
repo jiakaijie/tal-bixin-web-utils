@@ -40,7 +40,7 @@ const createInitLogCenter = (config) => {
     return {};
   }
 
-  const isMyGoManage = isNumber(isGoManage) ? isGoManage : 1;
+  let isMyGoManage = isNumber(isGoManage) ? isGoManage : 1;
 
   // 默认是打的是系统日志
   const log = logType ? (pcWebTypeConfig[logType] ? pcWebTypeConfig[logType] : pcWebTypeConfig.sys) : pcWebTypeConfig.sys;
@@ -96,9 +96,14 @@ const createInitLogCenter = (config) => {
     }
   }
 
+  const changeManage = (isGoManage) => {
+    isMyGoManage = isNumber(isGoManage) ? isGoManage : 1
+  }
+
   return {
     cacheLogData,
-    sendLog
+    sendLog,
+    changeManage
   }
 }
 

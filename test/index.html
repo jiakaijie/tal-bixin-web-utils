@@ -9,11 +9,12 @@
   <!-- <script src="./logcenter.js" type="module"></script> -->
   <script src="../dist/main.js"></script>
   <script>
-    const { cacheLogData, sendLog } = window.talBixinSdk.createInitLogCenter({
+    const { cacheLogData, sendLog, changeManage } = window.talBixinSdk.createInitLogCenter({
       appId: '',
       appKey: '',
-      isGoManage: 0
+      isGoManage: 1
     })
+    changeManage(0)
     sendLog({
       name: 9091091091,
       haha: '1728'
