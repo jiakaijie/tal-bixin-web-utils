@@ -6,6 +6,20 @@ import checkDataType, { checkConfig } from './checkData.js';
 import { isNull, isUndefined, isNumber, isString, isBoolean, isObj, isArr, getType, dataTypeConfig } from './utils/dataType.js';
 import { logError } from './utils/log.js';
 
+// 应对未来云搜索处理数据
+const changeData = (data) => {
+  const newData = {}
+  Object.keys(data).forEach(key => {
+    const value = data[key]
+    if (isArr(value) || isObj(value)) {
+      newData[key] = JSON.stringify(value);
+    } else {
+      newData[key] = value;
+    }
+  })
+  return newData;
+}
+
 const logCenterCommonData = 'logCenterCommonData'
 
 const createInitLogCenter = (config) => {
@@ -73,7 +87,7 @@ const createInitLogCenter = (config) => {
       } else {
         newCommonData = commonData;
       }
-      const data = { ...newCommonData, ...nowData };
+      const data = changeData({ ...newCommonData, ...nowData });
       if (checkDataType(mustDataType, data)) {
         const dateNow = Date.now();
         const href = `${host}/${appId}/${log}.gif`;
@@ -87,7 +101,7 @@ const createInitLogCenter = (config) => {
             'X-Log-Sign': md5(`${appId}&${dateNow}${appKey}`), // 通过appId + & +当前日期时间戳 + appkey 以md5签名
             'Content-Type': 'text/plain;charset=UTF-8',
           },
-          data
+          data: `content=${JSON.stringify(data)}`
         })
 
       }
